@@ -6,10 +6,16 @@ import os
 
 def random_crop(img):
     height, width, channels = img.shape
-    top_crop = randint(35, int(height / 8))
-    bottom_crop = height - randint(20, int(height / 10))
-    left_crop = randint(35, int(width / 8))
-    right_crop = width - randint(20, int(width / 10))
+    try:
+        top_crop = randint(35, int(height / 8))
+        bottom_crop = height - randint(35, int(height / 8))
+        left_crop = randint(35, int(width / 8))
+        right_crop = width - randint(35, int(width / 8))
+    except ValueError:
+        top_crop = randint(0, int(height / 8))
+        bottom_crop = height - randint(0, int(height / 8))
+        left_crop = randint(0, int(width / 8))
+        right_crop = width - randint(0, int(width / 8))
     crop_img = img[top_crop:bottom_crop, left_crop:right_crop]
     return crop_img
 
@@ -78,15 +84,12 @@ if __name__ == "__main__":
     for folder in os.listdir(absolute_path):
         print(folder)
         for filename in os.listdir(absolute_path + folder):
-            print(absolute_path + folder)
-            print(filename)
             image_path = absolute_path + folder + '/' + filename
             img = cv2.imread(image_path)
             crop_img = random_crop(img)
             # crop_translated_img = random_crop_translation(img)
             cv2.imwrite(absolute_path + folder + '/' +
                         "crop" + filename, crop_img)
-            print(absolute_path + folder + '/' + "crop" + filename)
             # cv2.imwrite('crop_translated' + image_path, crop_translated_img)
             blur_5 = blur(img, 5)
             blur_7 = blur(img, 7)
@@ -112,4 +115,3 @@ if __name__ == "__main__":
             jittered_img = jittering(img)
             cv2.imwrite(absolute_path + folder + '/' +
                         'jittered_img' + filename, jittered_img)
-        break
