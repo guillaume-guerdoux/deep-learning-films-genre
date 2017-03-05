@@ -7,4 +7,3 @@ if __name__ == "__main__":
         for filename in os.listdir(absolute_path + folder):
             if folder + '.jpg' != filename:
                 os.remove(absolute_path + folder + '/' + filename)
-        break
