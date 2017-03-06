@@ -17,8 +17,8 @@ class DatasetManager:
         self.cur_test = 0  # for test
         self.absolute_path = 'assets/posters/'
         self.resize_size = 227
-        self.mean = np.array([104., 117., 124.])  # mean in natural images
-
+        # RGB values of the mean-image of ILSVRC
+        self.mean = np.array([104., 117., 124.])
 
     def load_training_images(self, image_name_list, batch_size):
         images = np.ndarray([batch_size, self.resize_size, self.resize_size, 3])
@@ -44,7 +44,23 @@ class DatasetManager:
             img = cv2.resize(img, (self.resize_size, self.resize_size))
             img = img.astype(np.float32)
             img -= self.mean
+            images[index] = img
         return images
+
+    # TODO : Try 0.99 and 0.01
+    def create_label_vector(self, label_list):
+        label_vector = [0]*len(self.genres)
+        for label in label_list:
+            label_vector[self.genres.index(label)] = 1
+        return label_vector
+
+    def load_training_labels(self, image_name_list, batch_size):
+        labels_outputs = np.ndarray([batch_size, len(self.genres)])
+        for index, image_name in enumerate(image_name_list):
+            image_genre = self.labels[self.training_set_dict[image_name]]
+            label_vector = self.create_label_vector(image_genre)
+            labels_outputs[index] = label_vector
+        return labels_outputs
 
     def load_test_images(self, image_name_list, batch_size):
         images = np.ndarray([batch_size, self.resize_size, self.resize_size, 3])
@@ -73,43 +89,56 @@ class DatasetManager:
             images[index] = img
         return images
 
+    def load_test_labels(self, image_name_list, batch_size):
+        labels_outputs = np.ndarray([batch_size, len(self.genres)])
+        for index, image_name in enumerate(image_name_list):
+            image_genre = self.labels[self.test_set_dict[image_name]]
+            label_vector = self.create_label_vector(image_genre)
+            labels_outputs[index] = label_vector
+        return labels_outputs
+
     def next_batch(self, batch_size, phase):
         # Get next batch of images and labels
         if phase == 'train':
             images = []
             if self.cur_train + batch_size < len(self.training_samples_list):
+                # print("train normal")
                 images = self.load_training_images(
-                    self.training_samples_list[self.cur_train:self.cur_train + batch_size], batch_size)
-                # one_hot_labels = loaded_lab[self.cur_train:self.cur_train +
+                    self.training_samples_list[int(self.cur_train):int(self.cur_train + batch_size)], batch_size
+                )
+                labels = self.load_training_labels(
+                    self.training_samples_list[int(self.cur_train):int(self.cur_train + batch_size)], batch_size
+                )
                 # batch_size][:]
                 self.cur_train += batch_size
             else:
+                # print("train last")
                 new_ptr = (self.cur_train + batch_size) % len(self.training_samples_list)
-                images_list = self.training_samples_list[self.cur_train:] + self.training_samples_list[:new_ptr]
+                images_list = self.training_samples_list[int(self.cur_train):] + \
+                    self.training_samples_list[:int(new_ptr)]
                 images = self.load_training_images(images_list, batch_size)
-
-
-
-
-                # one_hot_labels = np.concatenate((loaded_lab[self.cur_train:][:], loaded_lab[
-                                            #    :(self.cur_train + batch_size) % self.train_size][:]), 0)
+                labels = self.load_training_labels(images_list, batch_size)
                 self.cur_train = new_ptr
         elif phase == 'test':
             images = []
             if self.cur_test + batch_size < len(self.test_samples_list):
+                # print("test normal")
                 images = self.load_test_images(
-                    self.test_samples_list[self.cur_test:self.cur_test + batch_size], batch_size)
-                # one_hot_labels = loaded_lab[self.cur_train:self.cur_train +
-                # batch_size][:]
+                    self.test_samples_list[int(self.cur_test):int(self.cur_test + batch_size)], batch_size)
+                labels = self.load_test_labels(
+                    self.test_samples_list[int(self.cur_train):int(self.cur_train + batch_size)], batch_size
+                )
                 self.cur_test += batch_size
 
             else:
+                # print("test last")
                 new_ptr = (self.cur_test + batch_size) % len(self.test_samples_list)
-                images_list = self.test_samples_list[self.cur_test:] + self.test_samples_list[:new_ptr]
+                images_list = self.test_samples_list[int(self.cur_test):] + \
+                    self.test_samples_list[:int(new_ptr)]
                 images = self.load_test_images(images_list, batch_size)
-
+                labels = self.load_test_labels(images_list, batch_size)
                 self.cur_test = new_ptr
         else:
             return None, None
 
-        return images  #, one_hot_labels
+        return images, labels
