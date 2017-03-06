@@ -1,41 +1,76 @@
 import numpy as np
 import cv2
-from scipy import misc
+from image_processing import *
+import random
 
 
 class DatasetManager:
 
-    def __init__(self, training_set_dict, test_set_dict):
+    def __init__(self, training_set_dict, test_set_dict, genres, labels):
         self.training_set_dict = training_set_dict
         self.test_set_dict = test_set_dict
+        self.genres = genres
+        self.labels = labels
         self.training_samples_list = list(self.training_set_dict.keys())
         self.test_samples_list = list(self.test_set_dict.keys())
         self.cur_train = 0  # for train
         self.cur_test = 0  # for test
         self.absolute_path = 'assets/posters/'
-        self.crop_size = 227
-        self.mean = np.array([104., 117., 124.])
+        self.resize_size = 227
+        self.mean = np.array([104., 117., 124.])  # mean in natural images
+
 
     def load_training_images(self, image_name_list, batch_size):
-        images = np.ndarray([batch_size, self.crop_size, self.crop_size, 3])
+        images = np.ndarray([batch_size, self.resize_size, self.resize_size, 3])
         for index, image_name in enumerate(image_name_list):
-            image = cv2.imread(
+            img = cv2.imread(
                 self.absolute_path + self.training_set_dict[image_name] + '/' + image_name)
-            image = cv2.resize(image, (self.crop_size, self.crop_size))
-            image = image.astype(np.float32)
-            image -= self.mean
-            images[index] = image
+            # 1/3 change to get each transformation
+            crop_chance = random.random()
+            blur_chance = random.random()
+            rotate_chance = random.random()
+            rotate_zoom_chance = random.random()
+            translation_chance = random.random()
+            if crop_chance <= 0.33:
+                img = random_crop(img)
+            if blur_chance <= 0.33:
+                img = blur(img, random.choice([5, 7, 15]))
+            if rotate_zoom_chance <= 0.33:
+                img = random_rotate(img)
+            elif rotate_chance <= 0.33:
+                img = random_rotate_zoom(img)
+            if translation_chance <= 0.33:
+                img = random_translate(img)
+            img = cv2.resize(img, (self.resize_size, self.resize_size))
+            img = img.astype(np.float32)
+            img -= self.mean
         return images
 
     def load_test_images(self, image_name_list, batch_size):
-        images = np.ndarray([batch_size, self.crop_size, self.crop_size, 3])
+        images = np.ndarray([batch_size, self.resize_size, self.resize_size, 3])
         for index, image_name in enumerate(image_name_list):
-            image = cv2.imread(
+            img = cv2.imread(
                 self.absolute_path + self.test_set_dict[image_name] + '/' + image_name)
-            image = cv2.resize(image, (self.crop_size, self.crop_size))
-            image = image.astype(np.float32)
-            image -= self.mean
-            images[index] = image
+            # 1/3 change to get each transformation
+            crop_chance = random.random()
+            blur_chance = random.random()
+            rotate_chance = random.random()
+            rotate_zoom_chance = random.random()
+            translation_chance = random.random()
+            if crop_chance <= 0.33:
+                img = random_crop(img)
+            if blur_chance <= 0.33:
+                img = blur(img, random.choice([5, 7, 15]))
+            if rotate_zoom_chance <= 0.33:
+                img = random_rotate(img)
+            elif rotate_chance <= 0.33:
+                img = random_rotate_zoom(img)
+            if translation_chance <= 0.33:
+                img = random_translate(img)
+            img = cv2.resize(img, (self.resize_size, self.resize_size))
+            img = img.astype(np.float32)
+            img -= self.mean
+            images[index] = img
         return images
 
     def next_batch(self, batch_size, phase):

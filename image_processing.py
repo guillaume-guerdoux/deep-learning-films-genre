@@ -54,15 +54,15 @@ def random_rotate_zoom(img):
     return rotated_zoomed_img
 
 
-def random_translation_rotation(img):
+def random_translate(img):
     height, width, channels = img.shape
     vertical_translation = randint(- int(height / 25), int(height / 25))
     horizontal_translation = randint(- int(width / 25), int(width / 25))
     M = np.float32([[1, 0, horizontal_translation],
                     [0, 1, vertical_translation]])
-    dst = cv2.warpAffine(img, M, (width, height))
-    rotated_translated_img = random_rotate(dst)
-    return rotated_translated_img
+    translated_img = cv2.warpAffine(img, M, (width, height))
+    # rotated_translated_img = random_rotate(dst)
+    return translated_img
 
 
 def affine_transformation(img):
@@ -79,7 +79,7 @@ def jittering(img):
     return jittered_img
 
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
     absolute_path = 'assets/posters/'
     for folder in os.listdir(absolute_path):
         print(folder)
@@ -114,4 +114,4 @@ if __name__ == "__main__":
                         'translated_rotated_2' + filename, translated_rotated_img_2)
             jittered_img = jittering(img)
             cv2.imwrite(absolute_path + folder + '/' +
-                        'jittered_img' + filename, jittered_img)
+                        'jittered_img' + filename, jittered_img)'''
