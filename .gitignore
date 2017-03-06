@@ -1,3 +1,6 @@
+# ignored alexnet model
+pretrained_alexnet.npy
+
 # Films posters
 assets/posters/
 assets/posters_backup/
