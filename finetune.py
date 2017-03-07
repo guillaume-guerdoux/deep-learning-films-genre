@@ -11,18 +11,18 @@ import sys
 
 def main():
     # Load dataset manager
-    with open('training_set_dict.pickle', 'rb') as handle:
-        training_dict = pickle.load(handle)
-    with open('test_set_dict.pickle', 'rb') as handle:
-        test_dict = pickle.load(handle)
-    with open('assets/genres.json') as json_data:
+    with open('training_set_list.pickle', 'rb') as handle:
+        training_set = pickle.load(handle)
+    with open('test_set_list.pickle', 'rb') as handle:
+        test_set = pickle.load(handle)
+    with open('genres.json') as json_data:
         genres = json.load(json_data)
-    with open('assets/dataset.json') as json_data:
-        dataset = json.load(json_data)
-    dataset_manager = DatasetManager(training_dict,
-                                     test_dict,
+    with open('labels.json') as json_data:
+        labels = json.load(json_data)
+    dataset_manager = DatasetManager(training_set,
+                                     test_set,
                                      genres,
-                                     dataset)
+                                     labels)
 
     # Learning params
     learning_rate = 0.001
