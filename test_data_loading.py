@@ -6,13 +6,13 @@ from dataset_manager import DatasetManager
 
 class DataLoadingTests(unittest.TestCase):
     def setUp(self):
-        with open('training_set_dict.pickle', 'rb') as handle:
+        with open('training_set_list.pickle', 'rb') as handle:
             self.training_dict = pickle.load(handle)
-        with open('test_set_dict.pickle', 'rb') as handle:
+        with open('test_set_list.pickle', 'rb') as handle:
             self.test_dict = pickle.load(handle)
-        with open('assets/genres.json') as json_data:
+        with open('genres.json') as json_data:
             self.genres = json.load(json_data)
-        with open('assets/dataset.json') as json_data:
+        with open('labels.json') as json_data:
             self.dataset = json.load(json_data)
         self.dataset_manager = DatasetManager(self.training_dict,
                                               self.test_dict,
@@ -30,14 +30,14 @@ class DataLoadingTests(unittest.TestCase):
 
     def test_last_traninig_image_load(self):
         self.dataset_manager.cur_train = \
-            len(self.dataset_manager.training_samples_list) - \
+            len(self.dataset_manager.training_list) - \
             (self.batch_size / 2)
         images = self.dataset_manager.next_batch(50, "train")
         self.assertEqual(images[0].shape, (50, 227, 227, 3))
 
     def test_last_traninig_labels_load(self):
         self.dataset_manager.cur_train = \
-            len(self.dataset_manager.training_samples_list) - \
+            len(self.dataset_manager.training_list) - \
             (self.batch_size / 2)
         images = self.dataset_manager.next_batch(50, "train")
         self.assertEqual(images[1].shape, (50, 26))
@@ -52,14 +52,14 @@ class DataLoadingTests(unittest.TestCase):
 
     def test_last_test_image_load(self):
         self.dataset_manager.cur_test = \
-            len(self.dataset_manager.test_samples_list) - \
+            len(self.dataset_manager.test_list) - \
             (self.batch_size / 2)
         images = self.dataset_manager.next_batch(50, "test")
         self.assertEqual(images[0].shape, (50, 227, 227, 3))
 
     def test_last_test_labels_load(self):
         self.dataset_manager.cur_test = \
-            len(self.dataset_manager.test_samples_list) - \
+            len(self.dataset_manager.test_list) - \
             (self.batch_size / 2)
         images = self.dataset_manager.next_batch(50, "test")
         self.assertEqual(images[1].shape, (50, 26))
