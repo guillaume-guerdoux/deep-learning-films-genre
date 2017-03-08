@@ -8,7 +8,7 @@ from model import Model
 from network import load_with_skip
 from network import mean_average_precision
 import sys
-
+import time
 
 def main():
     # Load dataset manager
@@ -29,11 +29,12 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 10
+    training_iters = 1000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
-    display_step = 1
-    test_step = 5  # test every test_step iterations
+    local_train_step = 10
+    global_test_step = 50 # test every global_test_step iterations
+    global_train_step = 75
 
     # Network params
     n_classes = 26
@@ -83,39 +84,46 @@ def main():
             sess.run(optimizer, feed_dict={
                      x: batch_xs, y: batch_ys, keep_var: keep_rate})
 
-            #"""
-            # Display testing status
-            '''if step % test_step == 0:
-                test_acc = 0.
+            # Display global testing error
+            if step % global_test_step == 0:
+                test_map_global = 0.
                 test_count = 0
                 # test accuracy by group of batch_size images
-                for _ in range(int(dataset.test_size / batch_size) + 1):
-                    batch_tx, batch_ty = dataset.next_batch(
-                        batch_size, 'test', loaded_img_test, loaded_lab_test)
-                    print(batch_tx.shape)
-                    acc = sess.run(accuracy, feed_dict={
-                                   x: batch_tx, y: batch_ty, keep_var: 1.})
-                    test_acc += acc
+                for _ in range(int(len(dataset_manager.test_list) / batch_size) + 1):
+                    batch_tx, batch_ty = dataset_manager.next_batch(
+                        batch_size, 'test')
+                    test_output = sess.run(pred, feed_dict={x: batch_tx, keep_var: 1})
+                    MAP = mean_average_precision(test_output, batch_ty)
+                    test_map_global += MAP
                     test_count += 1
-                test_acc /= test_count
-                print("{} Iter {}: Testing Accuracy = {:.4f}".format(
-                    datetime.now(), step, test_acc))'''
-            #"""
-            # Display training status
-            if step % display_step == 0:
-                # print("batch_xs", batch_xs.shape)
-                # print("batch_ys", batch_ys.shape)
-                # print("batch_ys", batch_ys)
-                # print("output", )
-                # Training-accuracy
-                # acc = sess.run(accuracy, feed_dict={
-                               # x: batch_xs, y: batch_ys, keep_var: 1.})
+                test_map_global /= test_count
+                print("Iter {}: Global Testing Accuracy = {:.4f}".format(
+                      step, test_map_global))
+
+            # Display global training error
+            if step % global_train_step == 0:
+                train_map_global = 0.
+                test_count = 0
+                # test accuracy by group of batch_size images
+                for _ in range(int(len(dataset_manager.training_list) / batch_size) + 1):
+                    batch_tx, batch_ty = dataset_manager.next_batch(
+                        batch_size, 'train')
+                    test_output = sess.run(pred, feed_dict={x: batch_tx, keep_var: 1})
+                    MAP = mean_average_precision(test_output, batch_ty)
+                    train_map_global += MAP
+                    test_count += 1
+                train_map_global /= test_count
+                print("Iter {}: Global Training Accuracy = {:.4f}".format(
+                      step, train_map_global))
+
+            # Display on batch training status
+            if step % local_train_step == 0:
                 test_output = sess.run(pred, feed_dict={x: batch_xs, keep_var: 1})
                 MAP = mean_average_precision(test_output, batch_ys)
                 batch_loss = sess.run(
                     loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})  # Training-loss
-                print("{} Iter {}: Training Loss = {:.4f}, Mean average precision = {:.4f}".format(
-                    datetime.now(), step, batch_loss, MAP))
+                print("Iter {}: Training Loss = {:.4f}, Mean average precision = {:.4f}".format(
+                    step, batch_loss, MAP))
 
             step += 1
         print("Finish!")
