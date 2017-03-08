@@ -3,6 +3,7 @@ import numpy as np
 import sys
 from network import *
 
+
 class Model:
     @staticmethod
     def alexnet(_X, _dropout):
@@ -29,5 +30,5 @@ class Model:
         fc7 = fc(fc6, 4096, 4096, name='fc7')
         fc7 = dropout(fc7, _dropout)
         # Layer 8 (fc-prob)
-        fc8 = fc(fc7, 4096, 26, relu=False, name='fc8')
+        fc8 = fc_sigmoid(fc7, 4096, 26, name='fc8')
         return fc8 # fc8 and fc7 (for transfer-learning)

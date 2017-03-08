@@ -6,6 +6,7 @@ from datetime import datetime
 from dataset_manager import DatasetManager
 from model import Model
 from network import load_with_skip
+from network import mean_average_precision
 import sys
 
 
@@ -28,7 +29,7 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 100
+    training_iters = 10
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     display_step = 1
@@ -48,13 +49,16 @@ def main():
 
     # Loss and optimizer
     loss = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
+        tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y))
     optimizer = tf.train.GradientDescentOptimizer(
         learning_rate=learning_rate).minimize(loss)
 
     # Evaluation
-    correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+    # correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
+    #accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+    #print(pred)
+    #print(y)
+    # accuracy = tf.contrib.metrics.streaming_sparse_average_precision_at_k(pred, tf.cast(y, tf.int64), 3)
 
     # Init
     init = tf.global_variables_initializer()
@@ -99,15 +103,19 @@ def main():
             #"""
             # Display training status
             if step % display_step == 0:
-                print(batch_xs.shape)
-                print(batch_ys.shape)
+                # print("batch_xs", batch_xs.shape)
+                # print("batch_ys", batch_ys.shape)
+                # print("batch_ys", batch_ys)
+                # print("output", )
                 # Training-accuracy
-                acc = sess.run(accuracy, feed_dict={
-                               x: batch_xs, y: batch_ys, keep_var: 1.})
+                # acc = sess.run(accuracy, feed_dict={
+                               # x: batch_xs, y: batch_ys, keep_var: 1.})
+                test_output = sess.run(pred, feed_dict={x: batch_xs, keep_var: 1})
+                MAP = mean_average_precision(test_output, batch_ys)
                 batch_loss = sess.run(
                     loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})  # Training-loss
-                print("{} Iter {}: Training Loss = {:.4f}, Accuracy = {:.4f}".format(
-                    datetime.now(), step, batch_loss, acc))
+                print("{} Iter {}: Training Loss = {:.4f}, Mean average precision = {:.4f}".format(
+                    datetime.now(), step, batch_loss, MAP))
 
             step += 1
         print("Finish!")

@@ -125,6 +125,15 @@ def fc(input, num_in, num_out, name, relu=True):
         fc = op(input, weights, biases, name=scope.name)
         return fc
 
+def fc_sigmoid(input, num_in, num_out, name):
+    ''' Fully connected layer with sigmoid activation function'''
+    with tf.variable_scope(name) as scope:
+        weights = make_var('weights', shape=[num_in, num_out])
+        biases = make_var('biases', [num_out])
+        op = tf.matmul(input, weights) + biases
+        fc_sigmoid = tf.nn.sigmoid(op, name=scope.name)
+        return fc_sigmoid
+
 
 def softmax(input, name):
     return tf.nn.softmax(input, name)
@@ -132,3 +141,27 @@ def softmax(input, name):
 
 def dropout(input, keep_prob):
     return tf.nn.dropout(input, keep_prob)
+
+
+def mean_average_precision(output, labels):
+    # Get nbre of genres (in our case : 26)
+    genres = labels.shape[1]
+    precisions = []
+    for i in range(genres):
+        # Go through each genre
+        average_precision = 0
+        temp_output = output[:, i]
+        temp_labels = labels[:, i]
+        sorted_output, sorted_labels = (list(t) for t in zip(*sorted(zip(temp_output, temp_labels), reverse=True)))
+        rank = 1
+        scores = []
+        for index, score in enumerate(sorted_output):
+            if sorted_labels[index] == 1:
+                scores.append(rank/(index + 1))
+                rank += 1
+        try:
+            average_precision = sum(scores)/len(scores)
+            precisions.append(average_precision)
+        except ZeroDivisionError:
+            pass
+    return(sum(precisions)/len(precisions))
