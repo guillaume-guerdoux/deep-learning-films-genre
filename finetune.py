@@ -10,6 +10,7 @@ from network import mean_average_precision
 import sys
 import time
 
+
 def main():
     # Load dataset manager
     with open('training_set_list.pickle', 'rb') as handle:
@@ -33,7 +34,7 @@ def main():
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 10
-    global_test_step = 50 # test every global_test_step iterations
+    global_test_step = 50  # test every global_test_step iterations
     global_train_step = 75
 
     # Network params
@@ -54,13 +55,6 @@ def main():
     optimizer = tf.train.GradientDescentOptimizer(
         learning_rate=learning_rate).minimize(loss)
 
-    # Evaluation
-    # correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-    #accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
-    #print(pred)
-    #print(y)
-    # accuracy = tf.contrib.metrics.streaming_sparse_average_precision_at_k(pred, tf.cast(y, tf.int64), 3)
-
     # Init
     init = tf.global_variables_initializer()
 
@@ -78,6 +72,7 @@ def main():
         print('Start training.')
         step = 1
         while step < training_iters:
+            print("Iter {}".format(step))
             batch_xs, batch_ys = dataset_manager.next_batch(
                 batch_size, 'train'
             )
@@ -89,16 +84,19 @@ def main():
                 test_map_global = 0.
                 test_count = 0
                 # test accuracy by group of batch_size images
-                for _ in range(int(len(dataset_manager.test_list) / batch_size) + 1):
+                for _ in range(int(len(dataset_manager.test_list)/batch_size) +
+                               1):
                     batch_tx, batch_ty = dataset_manager.next_batch(
                         batch_size, 'test')
-                    test_output = sess.run(pred, feed_dict={x: batch_tx, keep_var: 1})
+                    test_output = sess.run(pred,
+                                           feed_dict={x: batch_tx,
+                                                      keep_var: 1})
                     MAP = mean_average_precision(test_output, batch_ty)
                     test_map_global += MAP
                     test_count += 1
                 test_map_global /= test_count
-                print("Iter {}: Global Testing Accuracy = {:.4f}".format(
-                      step, test_map_global))
+                print("Global Testing Accuracy = {:.4f}".format(
+                       test_map_global))
 
             # Display global training error
             if step % global_train_step == 0:
@@ -113,8 +111,8 @@ def main():
                     train_map_global += MAP
                     test_count += 1
                 train_map_global /= test_count
-                print("Iter {}: Global Training Accuracy = {:.4f}".format(
-                      step, train_map_global))
+                print("Global Training Accuracy = {:.4f}".format(
+                       train_map_global))
 
             # Display on batch training status
             if step % local_train_step == 0:
@@ -122,8 +120,8 @@ def main():
                 MAP = mean_average_precision(test_output, batch_ys)
                 batch_loss = sess.run(
                     loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})  # Training-loss
-                print("Iter {}: Training Loss = {:.4f}, Mean average precision = {:.4f}".format(
-                    step, batch_loss, MAP))
+                print("Training Loss = {:.4f}, Mean average precision = {:.4f}".format(
+                      batch_loss, MAP))
 
             step += 1
         print("Finish!")
