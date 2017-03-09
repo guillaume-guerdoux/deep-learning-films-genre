@@ -1,3 +1,6 @@
+# ignored saved models
+saved_models/
+
 # ignored alexnet model
 pretrained_alexnet.npy
 
