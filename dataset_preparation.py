@@ -18,14 +18,14 @@ def create_dataset(input_json_path, output_genres_json_path,
             print(i)
             image_title = movie['movie_title'].strip().lower() + '.jpg'
             temp_genres = movie['genres']
-            # image_url = movie['image_urls'][0]
+            image_url = movie['image_urls'][0]
             for genre in movie['genres']:
                 genres.add(genre)
             im = Image.open(requests.get(image_url, stream=True).raw)
             im.save(output_poster_directory + '/' + image_title)
             labels[image_title] = temp_genres
-        except OSError:
-            print('Image not found')
+        except OSError as detail:
+            print('Image not found : ' + str(detail))
     ordered_genres = list(genres)
     ordered_genres.sort()
     with open('genres.json', 'w') as outfile:

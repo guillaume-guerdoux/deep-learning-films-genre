@@ -126,7 +126,7 @@ class DatasetManager:
                 images = self.load_test_images(
                     self.test_list[int(self.cur_test):int(self.cur_test + batch_size)], batch_size)
                 labels = self.load_test_labels(
-                    self.test_list[int(self.cur_train):int(self.cur_train + batch_size)], batch_size
+                    self.test_list[int(self.cur_test):int(self.cur_test + batch_size)], batch_size
                 )
                 self.cur_test += batch_size
 

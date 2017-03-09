@@ -5,6 +5,11 @@ pretrained_alexnet.npy
 assets/posters/
 assets/posters_backup/
 
+# Generated data
+labels.json
+training_set_list.pickle
+test_set_list.pickle
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
