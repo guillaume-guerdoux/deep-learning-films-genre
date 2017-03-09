@@ -1,13 +1,11 @@
 import tensorflow as tf
 import pickle
 import json
-from datetime import datetime
 
 from dataset_manager import DatasetManager
 from model import Model
 from network import load_with_skip
 from network import mean_average_precision
-import sys
 import time
 
 
@@ -30,12 +28,12 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 1000
+    training_iters = 2
     # display training information (loss, training accuracy, ...) every 10
     # iterations
-    local_train_step = 10
-    global_test_step = 50  # test every global_test_step iterations
-    global_train_step = 75
+    local_train_step = 1
+    global_test_step = 10  # test every global_test_step iterations
+    global_train_step = 15
 
     # Network params
     n_classes = 26
@@ -84,7 +82,7 @@ def main():
                 test_map_global = 0.
                 test_count = 0
                 # test accuracy by group of batch_size images
-                for _ in range(int(len(dataset_manager.test_list)/batch_size) +
+                for _ in range(int(len(dataset_manager.test_list) / batch_size) +
                                1):
                     batch_tx, batch_ty = dataset_manager.next_batch(
                         batch_size, 'test')
@@ -96,7 +94,7 @@ def main():
                     test_count += 1
                 test_map_global /= test_count
                 print("Global Testing Accuracy = {:.4f}".format(
-                       test_map_global))
+                    test_map_global))
 
             # Display global training error
             if step % global_train_step == 0:
@@ -106,42 +104,32 @@ def main():
                 for _ in range(int(len(dataset_manager.training_list) / batch_size) + 1):
                     batch_tx, batch_ty = dataset_manager.next_batch(
                         batch_size, 'train')
-                    test_output = sess.run(pred, feed_dict={x: batch_tx, keep_var: 1})
+                    test_output = sess.run(
+                        pred, feed_dict={x: batch_tx, keep_var: 1})
                     MAP = mean_average_precision(test_output, batch_ty)
                     train_map_global += MAP
                     test_count += 1
                 train_map_global /= test_count
                 print("Global Training Accuracy = {:.4f}".format(
-                       train_map_global))
+                    train_map_global))
 
             # Display on batch training status
             if step % local_train_step == 0:
-                test_output = sess.run(pred, feed_dict={x: batch_xs, keep_var: 1})
+                test_output = sess.run(
+                    pred, feed_dict={x: batch_xs, keep_var: 1})
                 MAP = mean_average_precision(test_output, batch_ys)
                 batch_loss = sess.run(
-                    loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})  # Training-loss
-                print("Training Loss = {:.4f}, Mean average precision = {:.4f}".format(
-                      batch_loss, MAP))
+                    loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})
+                print("Training Loss = {:.4f}, "
+                      "Mean average precision = {:.4f}".format(
+                        batch_loss, MAP))
 
             step += 1
         print("Finish!")
-        # Save model weights to disk
-        # save_path = saver.save(sess, "model.ckpt")
-        # x_test = tf.placeholder(tf.float32, [1, 227, 227, 3])
-        # y_test = tf.placeholder(tf.float32, [None, n_classes])
-        #save checkpoint of the model
-        # save_path = saver.save(sess, "saved_models/test_model.ckpt")
 
-        '''img = loaded_img_train[0][:][:][:]
-        label = loaded_lab_train[0][:]
-        print(img.shape)
-        print(label.shape)
-        acc = sess.run(accuracy, feed_dict={
-                       x_test: [img], y_test: [label], keep_var: 1.})
-        print(acc)
-        one_image = loaded_img_train[0][:][:][:]
-        prediction = sess.run(pred, feed_dict={x: [img], y: [label], keep_var: 1.})
-        print(prediction)'''
+        # Save model
+        saver.save(sess, "saved_models/film_genre_model.ckpt")
+
 
 if __name__ == '__main__':
     main()
