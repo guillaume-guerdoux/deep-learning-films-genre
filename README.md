@@ -18,4 +18,5 @@ You can run `python -m unittest` to test if all data can be load by Dataset_Mana
 By running `finetune.py`, the training of the last layer of AlexNet and the finetuning of all its layers are beginning. You now just have to wait, depending on your configuration
 
 
-
+### Save model
+Create a folder named "saved_models" where your trained models will be saved
