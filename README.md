@@ -20,3 +20,6 @@ By running `finetune.py`, the training of the last layer of AlexNet and the fine
 
 ### Save model
 Create a folder named "saved_models" where your trained models will be saved
+
+### Get logs
+Create a folder named "logs" to save logs during training

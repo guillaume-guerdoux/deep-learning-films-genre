@@ -2,6 +2,7 @@ import tensorflow as tf
 import pickle
 import json
 
+from datetime import datetime
 from dataset_manager import DatasetManager
 from model import Model
 from network import load_with_skip
@@ -19,6 +20,14 @@ def main():
         genres = json.load(json_data)
     with open('labels.json') as json_data:
         labels = json.load(json_data)
+
+    log_file_name = str(datetime.now()) + '-logs.txt'
+    with open("logs/" + log_file_name, 'w') as log_file:
+        log_file.write('Training logs \n')
+
+    iteration_file_name = str(datetime.now()) + '-iteration.txt'
+    with open("logs/" + iteration_file_name, 'w') as log_file:
+        log_file.write('Training iterations \n')
     dataset_manager = DatasetManager(training_set,
                                      test_set,
                                      genres,
@@ -28,12 +37,12 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 2
+    training_iters = 7
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 1
-    global_test_step = 10  # test every global_test_step iterations
-    global_train_step = 15
+    global_test_step = 5  # test every global_test_step iterations
+    global_train_step = 4
 
     # Network params
     n_classes = 26
@@ -71,6 +80,9 @@ def main():
         step = 1
         while step < training_iters:
             print("Iter {}".format(step))
+            with open("logs/" + iteration_file_name, 'a') as log_file:
+                log_file.write("Iter {} \n".format(
+                    step))
             batch_xs, batch_ys = dataset_manager.next_batch(
                 batch_size, 'train'
             )
@@ -93,8 +105,12 @@ def main():
                     test_map_global += MAP
                     test_count += 1
                 test_map_global /= test_count
+
                 print("Global Testing Accuracy = {:.4f}".format(
                     test_map_global))
+                with open("logs/" + log_file_name, 'a') as log_file:
+                    log_file.write("Iter {} Global Testing Accuracy = {:.4f} \n".format(
+                        step, test_map_global))
 
             # Display global training error
             if step % global_train_step == 0:
@@ -110,8 +126,11 @@ def main():
                     train_map_global += MAP
                     test_count += 1
                 train_map_global /= test_count
-                print("Global Training Accuracy = {:.4f}".format(
-                    train_map_global))
+                print(" Iter {} Global Training Accuracy = {:.4f}".format(
+                    step, train_map_global))
+                with open("logs/" + log_file_name, 'a') as log_file:
+                    log_file.write("Global Training Accuracy = {:.4f} \n".format(
+                        train_map_global))
 
             # Display on batch training status
             if step % local_train_step == 0:
@@ -123,6 +142,10 @@ def main():
                 print("Training Loss = {:.4f}, "
                       "Mean average precision = {:.4f}".format(
                         batch_loss, MAP))
+                with open("logs/" + log_file_name, 'a') as log_file:
+                    log_file.write("Iter {} Training Loss = {:.4f}, "
+                                   "Mean average precision = {:.4f} \n".format(
+                                    step, batch_loss, MAP))
 
             step += 1
         print("Finish!")

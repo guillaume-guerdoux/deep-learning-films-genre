@@ -1,3 +1,6 @@
+#ignore logs
+logs/
+
 # ignored saved models
 saved_models/
 
