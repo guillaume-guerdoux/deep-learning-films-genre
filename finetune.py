@@ -35,14 +35,14 @@ def main():
 
     # Learning params
     learning_rate = 0.001
-    batch_size = 50
+    batch_size = 32
     # Nombre d'iterations
-    training_iters = 7
+    training_iters = 5000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
-    local_train_step = 1
-    global_test_step = 5  # test every global_test_step iterations
-    global_train_step = 4
+    local_train_step = 25
+    global_test_step = 75  # test every global_test_step iterations
+    global_train_step = 50
 
     # Network params
     n_classes = 26
@@ -57,8 +57,7 @@ def main():
     pred = Model.alexnet(x, keep_var)  # definition of the network architecture
 
     # Loss and optimizer
-    loss = tf.reduce_mean(
-        tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y))
+    loss = tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y)
     optimizer = tf.train.GradientDescentOptimizer(
         learning_rate=learning_rate).minimize(loss)
 
@@ -79,7 +78,7 @@ def main():
         print('Start training.')
         step = 1
         while step < training_iters:
-            print("Iter {}".format(step))
+            # print("Iter {}".format(step))
             with open("logs/" + iteration_file_name, 'a') as log_file:
                 log_file.write("Iter {} \n".format(
                     step))
@@ -106,8 +105,8 @@ def main():
                     test_count += 1
                 test_map_global /= test_count
 
-                print("Global Testing Accuracy = {:.4f}".format(
-                    test_map_global))
+                # print("Global Testing Accuracy = {:.4f}".format(
+                #    test_map_global))
                 with open("logs/" + log_file_name, 'a') as log_file:
                     log_file.write("Iter {} Global Testing Accuracy = {:.4f} \n".format(
                         step, test_map_global))
@@ -126,8 +125,8 @@ def main():
                     train_map_global += MAP
                     test_count += 1
                 train_map_global /= test_count
-                print(" Iter {} Global Training Accuracy = {:.4f}".format(
-                    step, train_map_global))
+                # print(" Iter {} Global Training Accuracy = {:.4f}".format(
+                #    step, train_map_global))
                 with open("logs/" + log_file_name, 'a') as log_file:
                     log_file.write("Global Training Accuracy = {:.4f} \n".format(
                         train_map_global))
@@ -139,17 +138,18 @@ def main():
                 MAP = mean_average_precision(test_output, batch_ys)
                 batch_loss = sess.run(
                     loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})
-                print("Training Loss = {:.4f}, "
-                      "Mean average precision = {:.4f}".format(
-                        batch_loss, MAP))
+                # print("Training Loss = {:.4f}, "
+                #       "Mean average precision = {:.4f}".format(
+                #         batch_loss, MAP))
                 with open("logs/" + log_file_name, 'a') as log_file:
                     log_file.write("Iter {} Training Loss = {:.4f}, "
                                    "Mean average precision = {:.4f} \n".format(
                                     step, batch_loss, MAP))
 
             step += 1
-        print("Finish!")
-
+        # print("Finish!")
+        with open("logs/finish", 'w') as finish_file:
+            finish_file.write("Finish")
         # Save model
         saver.save(sess, "saved_models/film_genre_model.ckpt")
 
