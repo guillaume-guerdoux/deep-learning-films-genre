@@ -35,9 +35,9 @@ def main():
 
     # Learning params
     learning_rate = 0.001
-    batch_size = 32
+    batch_size = 50
     # Nombre d'iterations
-    training_iters = 5000
+    training_iters = 10000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 25
@@ -57,9 +57,11 @@ def main():
     pred = Model.alexnet(x, keep_var)  # definition of the network architecture
 
     # Loss and optimizer
-    loss = tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y)
-    optimizer = tf.train.GradientDescentOptimizer(
-        learning_rate=learning_rate).minimize(loss)
+    # loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y))
+    loss = tf.sqrt(tf.reduce_mean(tf.square(tf.subtract(y, pred))))
+    # optimizer = tf.train.GradientDescentOptimizer(
+    #    learning_rate=learning_rate).minimize(loss)
+    optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate).minimize(loss)
 
     # Init
     init = tf.global_variables_initializer()
