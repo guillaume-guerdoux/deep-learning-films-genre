@@ -66,14 +66,17 @@ class DataLoadingTests(unittest.TestCase):
 
     def test_create_label_vector(self):
         label_vector = self.dataset_manager.create_label_vector(
-        [" Action", " Documentary",
-         " Drama", " Horror", " News", " War"])
+            [" Action", " Documentary",
+             " Drama", " Horror", " News", " War"])
         self.assertEqual(label_vector, [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0,
                                         1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0])
 
     def test_create_label_vector_end(self):
         label_vector = self.dataset_manager.create_label_vector(
-        [" Action", " Documentary",
-         " Drama", " Horror", " News", " War", " Western"])
+            [" Action", " Documentary",
+             " Drama", " Horror", " News", " War", " Western"])
         self.assertEqual(label_vector, [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0,
                                         1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1])
+
+    def test_no_duplicate_between_test_and_train(self):
+        self.assertEqual(self.training_dict.intersection(self.test_dict), set())
