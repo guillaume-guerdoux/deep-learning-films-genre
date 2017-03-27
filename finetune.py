@@ -162,7 +162,7 @@ def main():
         with open("logs/finish", 'w') as finish_file:
             finish_file.write("Finish")
         # Save model
-        saver.save(sess, "saved_models/film_genre_model.ckpt")
+        # saver.save(sess, "saved_models/film_genre_model.ckpt")
 
 
 if __name__ == '__main__':
