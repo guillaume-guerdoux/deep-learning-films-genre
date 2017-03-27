@@ -21,11 +21,13 @@ def main():
     with open('labels.json') as json_data:
         labels = json.load(json_data)
 
-    log_file_name = str(datetime.now()) + '-logs.txt'
+    # log_file_name = str(datetime.now()) + '-logs.txt'
+    log_file_name = 'SCE_with_data_augmentation-logs.txt'
     with open("logs/" + log_file_name, 'w') as log_file:
         log_file.write('Training logs \n')
 
-    iteration_file_name = str(datetime.now()) + '-iteration.txt'
+    # iteration_file_name = str(datetime.now()) + '-iteration.txt'
+    iteration_file_name = 'SCE_with_data_augmentation-iteration.txt'
     with open("logs/" + iteration_file_name, 'w') as log_file:
         log_file.write('Training iterations \n')
     dataset_manager = DatasetManager(training_set,
@@ -37,7 +39,7 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 2000
+    training_iters = 5000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 10
@@ -57,8 +59,8 @@ def main():
     pred = Model.alexnet(x, keep_var)  # definition of the network architecture
 
     # Loss and optimizer
-    # loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y))
-    loss = tf.sqrt(tf.reduce_mean(tf.square(tf.subtract(y, pred))))
+    loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=y))
+    # loss = tf.sqrt(tf.reduce_mean(tf.square(tf.subtract(y, pred))))
     # optimizer = tf.train.GradientDescentOptimizer(
     #    learning_rate=learning_rate).minimize(loss)
     optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate).minimize(loss)
