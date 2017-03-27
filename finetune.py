@@ -21,11 +21,13 @@ def main():
     with open('labels.json') as json_data:
         labels = json.load(json_data)
 
-    log_file_name = str(datetime.now()) + '-logs.txt'
+    # log_file_name = str(datetime.now()) + '-logs.txt'
+    log_file_name = 'MSE_without_data_augmentation-logs.txt'
     with open("logs/" + log_file_name, 'w') as log_file:
         log_file.write('Training logs \n')
 
-    iteration_file_name = str(datetime.now()) + '-iteration.txt'
+    # iteration_file_name = str(datetime.now()) + '-iteration.txt'
+    iteration_file_name = 'MSE_without_data_augmentation-iteration.txt'
     with open("logs/" + iteration_file_name, 'w') as log_file:
         log_file.write('Training iterations \n')
     dataset_manager = DatasetManager(training_set,
@@ -37,7 +39,7 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 2000
+    training_iters = 5000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 10
