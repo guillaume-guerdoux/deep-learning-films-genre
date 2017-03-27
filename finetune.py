@@ -42,7 +42,7 @@ def main():
     # iterations
     local_train_step = 10
     global_test_step = 50  # test every global_test_step iterations
-    global_train_step = 25
+    global_train_step = 50
 
     # Network params
     n_classes = 26
@@ -80,6 +80,7 @@ def main():
         print('Start training.')
         step = 1
         while step < training_iters:
+            # print("Iter ", step)
             with open("logs/" + iteration_file_name, 'a') as log_file:
                 log_file.write("Iter {} \n".format(
                     step))

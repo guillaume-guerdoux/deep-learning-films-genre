@@ -5,7 +5,7 @@ import json
 from dataset_manager import DatasetManager
 from model import Model
 from network import load_with_skip
-from network import mean_average_precision
+from utils import mean_average_precision
 import time
 
 
@@ -59,7 +59,7 @@ def main():
         for _ in range(int(len(dataset_manager.test_list) / batch_size) +
                        1):
             batch_tx, batch_ty = dataset_manager.next_batch(
-                batch_size, 'test')
+                batch_size, 'train')
             test_output = sess.run(pred,
                                    feed_dict={x: batch_tx,
                                               keep_var: 1})
@@ -67,7 +67,7 @@ def main():
             test_map_global += MAP
             test_count += 1
         test_map_global /= test_count
-        print("Global Testing Accuracy = {:.4f}".format(
+        print("Global Training Accuracy = {:.4f}".format(
             test_map_global))
 
 

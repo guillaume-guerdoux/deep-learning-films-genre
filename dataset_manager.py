@@ -68,7 +68,7 @@ class DatasetManager:
             img = cv2.imread(
                 self.absolute_path + '/' + image_name)
             # 1/3 change to get each transformation
-            crop_chance = random.random()
+            '''crop_chance = random.random()
             blur_chance = random.random()
             rotate_chance = random.random()
             rotate_zoom_chance = random.random()
@@ -82,7 +82,7 @@ class DatasetManager:
             elif rotate_chance <= 0.33:
                 img = random_rotate_zoom(img)
             if translation_chance <= 0.33:
-                img = random_translate(img)
+                img = random_translate(img)'''
             img = cv2.resize(img, (self.resize_size, self.resize_size))
             img = img.astype(np.float32)
             img -= self.mean
