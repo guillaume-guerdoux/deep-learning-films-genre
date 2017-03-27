@@ -39,7 +39,7 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 2000
+    training_iters = 5000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 10
