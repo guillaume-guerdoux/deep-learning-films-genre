@@ -16,6 +16,7 @@ genres.json
 labels.json
 training_set_list.pickle
 test_set_list.pickle
+validation_set_list.pickle
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
