@@ -14,6 +14,8 @@ def main():
     # Load dataset manager
     with open('training_set_list.pickle', 'rb') as handle:
         training_set = pickle.load(handle)
+    with open('validation_set_list.pickle', 'rb') as handle:
+        validation_set = pickle.load(handle)
     with open('test_set_list.pickle', 'rb') as handle:
         test_set = pickle.load(handle)
     with open('genres.json') as json_data:
@@ -28,7 +30,13 @@ def main():
     iteration_file_name = str(datetime.now()) + '-iteration.txt'
     with open("logs/" + iteration_file_name, 'w') as log_file:
         log_file.write('Training iterations \n')
+
+    best_iteration_file_name = str(datetime.now()) + '-best_iteration.txt'
+    with open("logs/" + best_iteration_file_name, 'w') as log_file:
+        log_file.write('Best Training iterations \n')
+
     dataset_manager = DatasetManager(training_set,
+                                     validation_set,
                                      test_set,
                                      genres,
                                      labels)
@@ -36,16 +44,16 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 1000
+    training_iters = 3000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
     local_train_step = 10
-    global_test_step = 50  # test every global_test_step iterations
+    global_validation_step = 50  # test every global_test_step iterations
     global_train_step = 50
 
     # Network params
     n_classes = 26
-    keep_rate = 0.5  # for dropout
+    keep_rate = 0.75  # for dropout
 
     # Graph input
     x = tf.placeholder(tf.float32, [batch_size, 227, 227, 3])
@@ -68,6 +76,9 @@ def main():
     # Initialize an saver for store model checkpoints
     saver = tf.train.Saver()
 
+    # To do early stopping
+    max_validation_map = 0
+
     # Launch the graph
     with tf.Session() as sess:
         sess.run(init)
@@ -79,7 +90,7 @@ def main():
         print('Start training.')
         step = 1
         while step < training_iters:
-            # print("Iter ", step)
+            print("Iter ", step)
             with open("logs/" + iteration_file_name, 'a') as log_file:
                 log_file.write("Iter {} \n".format(
                     step))
@@ -89,31 +100,17 @@ def main():
             sess.run(optimizer, feed_dict={
                      x: batch_xs, y: batch_ys, keep_var: keep_rate})
 
-            # Display global testing error
-            if step % global_test_step == 0:
-                test_map_global = 0.
-                test_count = 0
-                # test accuracy by group of batch_size images
-                for _ in range(int(len(dataset_manager.test_list) / batch_size) +
-                               1):
-                    batch_tx, batch_ty = dataset_manager.next_batch(
-                        batch_size, 'test')
-                    test_output = sess.run(pred,
-                                           feed_dict={x: batch_tx,
-                                                      keep_var: 1})
-                    MAP = mean_average_precision(test_output, batch_ty)
-                    test_map_global += MAP
-                    test_count += 1
-                test_map_global /= test_count
-
-                # print("Global Testing Accuracy = {:.4f}".format(
-                #    test_map_global))
-                '''print("Global Tests \n test_output: ", test_output[0])
-                print("label: ", batch_ty[0])
-                print("Mean average precision: ",  test_map_global)'''
+            # Display on batch training status
+            if step % local_train_step == 0:
+                local_train_output = sess.run(
+                    pred, feed_dict={x: batch_xs, keep_var: 1})
+                MAP = mean_average_precision(local_train_output, batch_ys)
+                batch_loss = sess.run(
+                    loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})
                 with open("logs/" + log_file_name, 'a') as log_file:
-                    log_file.write("Iter {} Global Testing Accuracy = {:.4f} \n".format(
-                        step, test_map_global))
+                    log_file.write("Iter {} Training Loss = {:.4f}, "
+                                   "Mean average precision = {:.4f} \n".format(
+                                    step, batch_loss, MAP))
 
             # Display global training error
             if step % global_train_step == 0:
@@ -129,37 +126,42 @@ def main():
                     train_map_global += MAP
                     test_count += 1
                 train_map_global /= test_count
-                # print(" Iter {} Global Training Accuracy = {:.4f}".format(
-                #    step, train_map_global))
-                '''print("Global Train \n test_output: ", test_output[0])
-                print("label: ", batch_ty[0])
-                print("Mean average precision: ",  train_map_global)'''
                 with open("logs/" + log_file_name, 'a') as log_file:
                     log_file.write("Global Training Accuracy = {:.4f} \n".format(
                         train_map_global))
 
-            # Display on batch training status
-            if step % local_train_step == 0:
-                test_output = sess.run(
-                    pred, feed_dict={x: batch_xs, keep_var: 1})
-                MAP = mean_average_precision(test_output, batch_ys)
-                batch_loss = sess.run(
-                    loss, feed_dict={x: batch_xs, y: batch_ys, keep_var: 1.})
-                '''print("Loss: ", batch_loss)
-                print("test_output: ", test_output[0])
-                print("label: ", batch_ys[0])
-                print("Mean average precision: ",  MAP)'''
+            # Display global testing error
+            if step % global_validation_step == 0:
+                validation_map_global = 0.
+                validation_count = 0
+                # test accuracy by group of batch_size images
+                for _ in range(int(len(dataset_manager.test_list) / batch_size) +
+                               1):
+                    batch_tx, batch_ty = dataset_manager.next_batch(
+                        batch_size, 'val')
+                    test_output = sess.run(pred,
+                                           feed_dict={x: batch_tx,
+                                                      keep_var: 1})
+                    MAP = mean_average_precision(test_output, batch_ty)
+                    validation_map_global += MAP
+                    validation_count += 1
+                validation_map_global /= validation_count
                 with open("logs/" + log_file_name, 'a') as log_file:
-                    log_file.write("Iter {} Training Loss = {:.4f}, "
-                                   "Mean average precision = {:.4f} \n".format(
-                                    step, batch_loss, MAP))
+                    log_file.write("Iter {} Global Validation Accuracy = {:.4f} \n".format(
+                        step, validation_map_global))
+                if validation_map_global >= max_validation_map:
+                    max_validation_map = validation_map_global
+                    with open("logs/" + best_iteration_file_name, 'a') as log_file:
+                        log_file.write("Iter {}  \n".format(
+                                        step))
+                    # Save model
+                    saver.save(sess, "saved_models/film_genre_model.ckpt")
 
             step += 1
         # print("Finish!")
         with open("logs/finish", 'w') as finish_file:
             finish_file.write("Finish")
-        # Save model
-        saver.save(sess, "saved_models/film_genre_model.ckpt")
+
 
 
 if __name__ == '__main__':
