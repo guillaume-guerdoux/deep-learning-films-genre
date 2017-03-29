@@ -6,9 +6,11 @@ import random
 
 class DatasetManager:
 
-    def __init__(self, training_set, test_set, genres, labels):
+    def __init__(self, training_set, validation_set, test_set, genres, labels):
         self.training_list = list(training_set)
+        self.validation_set = list(validation_set)
         self.test_list = list(test_set)
+
         self.genres = genres
         self.labels = labels
         # self.training_samples_list = list(self.training_set_dict.keys())
