@@ -13,6 +13,8 @@ def main():
     # Load dataset manager
     with open('training_set_list.pickle', 'rb') as handle:
         training_set = pickle.load(handle)
+    with open('validation_set_list.pickle', 'rb') as handle:
+        validation_set = pickle.load(handle)
     with open('test_set_list.pickle', 'rb') as handle:
         test_set = pickle.load(handle)
     with open('genres.json') as json_data:
@@ -20,6 +22,7 @@ def main():
     with open('labels.json') as json_data:
         labels = json.load(json_data)
     dataset_manager = DatasetManager(training_set,
+                                     validation_set,
                                      test_set,
                                      genres,
                                      labels)
@@ -59,7 +62,7 @@ def main():
         for _ in range(int(len(dataset_manager.test_list) / batch_size) +
                        1):
             batch_tx, batch_ty = dataset_manager.next_batch(
-                batch_size, 'train')
+                batch_size, 'test')
             test_output = sess.run(pred,
                                    feed_dict={x: batch_tx,
                                               keep_var: 1})
@@ -67,7 +70,7 @@ def main():
             test_map_global += MAP
             test_count += 1
         test_map_global /= test_count
-        print("Global Training Accuracy = {:.4f}".format(
+        print("Global Test Accuracy = {:.4f}".format(
             test_map_global))
 
 
