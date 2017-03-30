@@ -23,17 +23,13 @@ def main():
     with open('labels.json') as json_data:
         labels = json.load(json_data)
 
-    log_file_name = str(datetime.now()) + '-logs.txt'
+    log_file_name = 'dropout_1-logs.txt'
     with open("logs/" + log_file_name, 'w') as log_file:
         log_file.write('Training logs \n')
 
-    iteration_file_name = str(datetime.now()) + '-iteration.txt'
+    iteration_file_name = 'dropout_1-iteration.txt'
     with open("logs/" + iteration_file_name, 'w') as log_file:
         log_file.write('Training iterations \n')
-
-    best_iteration_file_name = str(datetime.now()) + '-best_iteration.txt'
-    with open("logs/" + best_iteration_file_name, 'w') as log_file:
-        log_file.write('Best Training iterations \n')
 
     dataset_manager = DatasetManager(training_set,
                                      validation_set,
@@ -53,7 +49,7 @@ def main():
 
     # Network params
     n_classes = 26
-    keep_rate = 0.75  # for dropout
+    keep_rate = 1  # for dropout
 
     # Graph input
     x = tf.placeholder(tf.float32, [batch_size, 227, 227, 3])
@@ -76,9 +72,6 @@ def main():
     # Initialize an saver for store model checkpoints
     saver = tf.train.Saver()
 
-    # To do early stopping
-    max_validation_map = 0
-
     # Launch the graph
     with tf.Session() as sess:
         sess.run(init)
@@ -90,7 +83,7 @@ def main():
         print('Start training.')
         step = 1
         while step < training_iters:
-            print("Iter ", step)
+            # print("Iter ", step)
             with open("logs/" + iteration_file_name, 'a') as log_file:
                 log_file.write("Iter {} \n".format(
                     step))
@@ -149,14 +142,6 @@ def main():
                 with open("logs/" + log_file_name, 'a') as log_file:
                     log_file.write("Iter {} Global Validation Accuracy = {:.4f} \n".format(
                         step, validation_map_global))
-                if validation_map_global >= max_validation_map:
-                    max_validation_map = validation_map_global
-                    with open("logs/" + best_iteration_file_name, 'a') as log_file:
-                        log_file.write("Iter {}  \n".format(
-                                        step))
-                    # Save model
-                    saver.save(sess, "saved_models/film_genre_model.ckpt")
-
             step += 1
         # print("Finish!")
         with open("logs/finish", 'w') as finish_file:
