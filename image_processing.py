@@ -77,3 +77,13 @@ def jittering(img):
     zitter[:, :, 1] = noise
     jittered_img = cv2.add(img, zitter)
     return jittered_img
+
+if __name__ == "__main__":
+    img = cv2.imread(
+        'saved_models/images_tests/my_sisters_keeper.jpg')
+    img = cv2.resize(img, (227, 227))
+
+    cv2.imshow('image',img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    cv2.imwrite('report/images/my_sisters_keeper_rotate.jpg', random_rotate_zoom(img))
