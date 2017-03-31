@@ -29,8 +29,14 @@ def get_genre_stats(labels):
     return percentage_dict
 
 
+def draw_training_loss(logs):
+    for line in logs:
+        print("a", line)
+
 if __name__ == "__main__":
-    with open('labels.json') as json_data:
+    '''with open('labels.json') as json_data:
         labels = json.load(json_data)
     # print(labels)
-    print(get_genre_stats(labels))
+    print(list(reversed(sorted(get_genre_stats(labels).items(), key=lambda x:x[1]))))'''
+    logs = open("logs/logs_to_compare_MSE_SCE_data_augmentation/MSE_with_data_augmentation-logs.txt", 'r')
+    draw_training_loss(logs)
