@@ -29,9 +29,54 @@ def get_genre_stats(labels):
     return percentage_dict
 
 
+
 def draw_training_loss(logs):
+    iterations = []
+    training_loss = []
     for line in logs:
-        print("a", line)
+        line_list = line.split()
+        if line_list[0] == "Iter" and \
+           line_list[2] == "Training" and \
+           line_list[3] == "Loss" and \
+           line_list[4] == "=":
+            iterations.append(line_list[1])
+            training_loss.append(line_list[5])
+    return iterations, training_loss
+
+
+def draw_training_mean_average_precision(logs):
+    print("ok")
+    iterations = []
+    iteration_counter = 50
+    training_precision = []
+    for line in logs:
+        print(line)
+        line_list = line.split()
+        print(line_list)
+        if line_list[0] == "Global" and \
+           line_list[1] == "Training" and \
+           line_list[2] == "Accuracy" and \
+           line_list[3] == "=":
+            iterations.append(iteration_counter)
+            iteration_counter += 50
+            training_precision.append(line_list[4])
+    print(iterations)
+    return iterations, training_precision
+
+
+def draw_validation_mean_average_precision(logs):
+    iterations = []
+    validation_precision = []
+    for line in logs:
+        line_list = line.split()
+        if line_list[0] == "Iter" and \
+           line_list[2] == "Global" and \
+           line_list[3] == "Testing" and \
+           line_list[4] == "Accuracy":
+            iterations.append(line_list[1])
+            validation_precision.append(line_list[6])
+    return iterations, validation_precision
+
 
 if __name__ == "__main__":
     '''with open('labels.json') as json_data:
