@@ -1,6 +1,8 @@
 import numpy as np
 import pickle
 import json
+import matplotlib.pyplot as plt
+
 from collections import defaultdict
 
 from sklearn.metrics import average_precision_score
@@ -29,7 +31,6 @@ def get_genre_stats(labels):
     return percentage_dict
 
 
-
 def draw_training_loss(logs):
     iterations = []
     training_loss = []
@@ -40,7 +41,7 @@ def draw_training_loss(logs):
            line_list[3] == "Loss" and \
            line_list[4] == "=":
             iterations.append(line_list[1])
-            training_loss.append(line_list[5])
+            training_loss.append(line_list[5].replace(',', ''))
     return iterations, training_loss
 
 
@@ -83,5 +84,61 @@ if __name__ == "__main__":
         labels = json.load(json_data)
     # print(labels)
     print(list(reversed(sorted(get_genre_stats(labels).items(), key=lambda x:x[1]))))'''
-    logs = open("logs/logs_to_compare_MSE_SCE_data_augmentation/MSE_with_data_augmentation-logs.txt", 'r')
-    draw_training_loss(logs)
+    mse_with_data_aumentation_logs = open(
+        "logs/logs_to_compare_MSE_SCE_data_augmentation/MSE_with_data_augmentation-logs.txt",
+        'r'
+    )
+    mse_without_data_aumentation_logs = open(
+        "logs/logs_to_compare_MSE_SCE_data_augmentation/MSE_without_data_augmentation-logs.txt",
+        'r'
+    )
+
+    sce_with_data_aumentation_logs = open(
+        "logs/logs_to_compare_MSE_SCE_data_augmentation/SCE_with_data_augmentation-logs.txt",
+        'r'
+    )
+    sce_without_data_aumentation_logs = open(
+        "logs/logs_to_compare_MSE_SCE_data_augmentation/SCE_without_data_augmentation-logs.txt",
+        'r'
+    )
+
+    mse_with_data_augmentation_iterations, mse_with_data_augmentation_training_loss = \
+        draw_training_loss(mse_with_data_aumentation_logs)
+    mse_without_data_augmentation_iterations, mse_without_data_augmentation_training_loss = \
+        draw_training_loss(mse_without_data_aumentation_logs)
+    sce_with_data_augmentation_iterations, sce_with_data_augmentation_training_loss = \
+        draw_training_loss(sce_with_data_aumentation_logs)
+    sce_without_data_augmentation_iterations, sce_without_data_augmentation_training_loss = \
+        draw_training_loss(sce_without_data_aumentation_logs)
+
+    mse_fig, mse_ax = plt.subplots()
+    mse_ax.plot(
+            mse_with_data_augmentation_iterations,
+            mse_with_data_augmentation_training_loss,
+            'r--',
+            label="Mean square error / Data augmentation"
+        )
+    mse_ax.plot(
+            mse_without_data_augmentation_iterations,
+            mse_without_data_augmentation_training_loss,
+            'b--',
+            label="Mean square error / No data augmentation"
+        )
+    legend = mse_ax.legend(loc='upper center')
+    plt.show()
+
+    sce_fig, sce_ax = plt.subplots()
+    sce_ax.plot(
+            sce_with_data_augmentation_iterations,
+            sce_with_data_augmentation_training_loss,
+            'r--',
+            label="Sigmoid Cross Entropy / Data augmentation"
+        )
+    sce_ax.plot(
+            sce_without_data_augmentation_iterations,
+            sce_without_data_augmentation_training_loss,
+            'b--',
+            label="Sigmoid Cross Entropy / No data augmentation"
+        )
+    legend = sce_ax.legend(loc='upper center')
+    plt.show()
