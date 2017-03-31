@@ -44,16 +44,16 @@ def main():
     learning_rate = 0.001
     batch_size = 50
     # Nombre d'iterations
-    training_iters = 2000
+    training_iters = 1000
     # display training information (loss, training accuracy, ...) every 10
     # iterations
-    local_train_step = 10
-    global_validation_step = 50  # test every global_test_step iterations
-    global_train_step = 50
+    local_train_step = 20
+    global_validation_step = 25  # test every global_test_step iterations
+    global_train_step = 100
 
     # Network params
     n_classes = 26
-    keep_rate = 0.75  # for dropout
+    keep_rate = 0.5  # for dropout
 
     # Graph input
     x = tf.placeholder(tf.float32, [batch_size, 227, 227, 3])
@@ -90,7 +90,7 @@ def main():
         print('Start training.')
         step = 1
         while step < training_iters:
-            print("Iter ", step)
+            # print("Iter ", step)
             with open("logs/" + iteration_file_name, 'a') as log_file:
                 log_file.write("Iter {} \n".format(
                     step))
@@ -155,7 +155,7 @@ def main():
                         log_file.write("Iter {}  \n".format(
                                         step))
                     # Save model
-                    saver.save(sess, "saved_models/film_genre_model.ckpt")
+                    saver.save(sess, "saved_models/model_dropout05_mean_square_error.ckpt")
 
             step += 1
         # print("Finish!")
