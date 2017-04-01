@@ -1,0 +1,11 @@
+Best Training iterations 
+Iter 25  
+Iter 50  
+Iter 75  
+Iter 150  
+Iter 200  
+Iter 225  
+Iter 250  
+Iter 325  
+Iter 400  
+Iter 450  

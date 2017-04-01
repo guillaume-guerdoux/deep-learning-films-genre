@@ -1,0 +1,278 @@
+Training logs 
+Iter 10 Training Loss = 0.5451, Mean average precision = 0.2401 
+Iter 20 Training Loss = 0.4905, Mean average precision = 0.2393 
+Iter 30 Training Loss = 0.4077, Mean average precision = 0.2771 
+Iter 40 Training Loss = 0.2959, Mean average precision = 0.4458 
+Iter 50 Training Loss = 0.2939, Mean average precision = 0.4423 
+Global Training Accuracy = 0.4421 
+Iter 50 Global Validation Accuracy = 0.4425 
+Iter 60 Training Loss = 0.2890, Mean average precision = 0.5736 
+Iter 70 Training Loss = 0.2746, Mean average precision = 0.6348 
+Iter 80 Training Loss = 0.2777, Mean average precision = 0.6012 
+Iter 90 Training Loss = 0.2815, Mean average precision = 0.5957 
+Iter 100 Training Loss = 0.2725, Mean average precision = 0.6566 
+Global Training Accuracy = 0.5169 
+Iter 100 Global Validation Accuracy = 0.5170 
+Iter 110 Training Loss = 0.2771, Mean average precision = 0.5846 
+Iter 120 Training Loss = 0.2788, Mean average precision = 0.5286 
+Iter 130 Training Loss = 0.3057, Mean average precision = 0.4735 
+Iter 140 Training Loss = 0.3669, Mean average precision = 0.1522 
+Iter 150 Training Loss = 0.3181, Mean average precision = 0.3891 
+Global Training Accuracy = 0.4085 
+Iter 150 Global Validation Accuracy = 0.4107 
+Iter 160 Training Loss = 0.3234, Mean average precision = 0.3174 
+Iter 170 Training Loss = 0.3258, Mean average precision = 0.4094 
+Iter 180 Training Loss = 0.3328, Mean average precision = 0.4375 
+Iter 190 Training Loss = 0.3199, Mean average precision = 0.3816 
+Iter 200 Training Loss = 0.3305, Mean average precision = 0.4511 
+Global Training Accuracy = 0.4055 
+Iter 200 Global Validation Accuracy = 0.4089 
+Iter 210 Training Loss = 0.3293, Mean average precision = 0.4418 
+Iter 220 Training Loss = 0.2974, Mean average precision = 0.4727 
+Iter 230 Training Loss = 0.3431, Mean average precision = 0.3676 
+Iter 240 Training Loss = 0.3419, Mean average precision = 0.4253 
+Iter 250 Training Loss = 0.3464, Mean average precision = 0.3984 
+Global Training Accuracy = 0.4039 
+Iter 250 Global Validation Accuracy = 0.4079 
+Iter 260 Training Loss = 0.3187, Mean average precision = 0.4343 
+Iter 270 Training Loss = 0.3246, Mean average precision = 0.4024 
+Iter 280 Training Loss = 0.3431, Mean average precision = 0.3700 
+Iter 290 Training Loss = 0.3282, Mean average precision = 0.3285 
+Iter 300 Training Loss = 0.3442, Mean average precision = 0.3381 
+Global Training Accuracy = 0.4045 
+Iter 300 Global Validation Accuracy = 0.4077 
+Iter 310 Training Loss = 0.3340, Mean average precision = 0.3429 
+Iter 320 Training Loss = 0.3397, Mean average precision = 0.3932 
+Iter 330 Training Loss = 0.3453, Mean average precision = 0.4158 
+Iter 340 Training Loss = 0.3258, Mean average precision = 0.3804 
+Iter 350 Training Loss = 0.3419, Mean average precision = 0.3413 
+Global Training Accuracy = 0.4048 
+Iter 350 Global Validation Accuracy = 0.4036 
+Iter 360 Training Loss = 0.3431, Mean average precision = 0.3800 
+Iter 370 Training Loss = 0.3317, Mean average precision = 0.3372 
+Iter 380 Training Loss = 0.3174, Mean average precision = 0.4132 
+Iter 390 Training Loss = 0.3223, Mean average precision = 0.4458 
+Iter 400 Training Loss = 0.3234, Mean average precision = 0.4769 
+Global Training Accuracy = 0.4036 
+Iter 400 Global Validation Accuracy = 0.4031 
+Iter 410 Training Loss = 0.3431, Mean average precision = 0.3602 
+Iter 420 Training Loss = 0.3328, Mean average precision = 0.4434 
+Iter 430 Training Loss = 0.3374, Mean average precision = 0.4271 
+Iter 440 Training Loss = 0.3497, Mean average precision = 0.4212 
+Iter 450 Training Loss = 0.3088, Mean average precision = 0.5510 
+Global Training Accuracy = 0.4044 
+Iter 450 Global Validation Accuracy = 0.4061 
+Iter 460 Training Loss = 0.3397, Mean average precision = 0.3740 
+Iter 470 Training Loss = 0.3174, Mean average precision = 0.4153 
+Iter 480 Training Loss = 0.3519, Mean average precision = 0.2973 
+Iter 490 Training Loss = 0.3419, Mean average precision = 0.3765 
+Iter 500 Training Loss = 0.3328, Mean average precision = 0.4053 
+Global Training Accuracy = 0.4035 
+Iter 500 Global Validation Accuracy = 0.4077 
+Iter 510 Training Loss = 0.3174, Mean average precision = 0.3874 
+Iter 520 Training Loss = 0.3223, Mean average precision = 0.4090 
+Iter 530 Training Loss = 0.3293, Mean average precision = 0.3809 
+Iter 540 Training Loss = 0.3234, Mean average precision = 0.3661 
+Iter 550 Training Loss = 0.3223, Mean average precision = 0.4205 
+Global Training Accuracy = 0.4049 
+Iter 550 Global Validation Accuracy = 0.4071 
+Iter 560 Training Loss = 0.3063, Mean average precision = 0.4828 
+Iter 570 Training Loss = 0.3162, Mean average precision = 0.4253 
+Iter 580 Training Loss = 0.3038, Mean average precision = 0.4721 
+Iter 590 Training Loss = 0.3234, Mean average precision = 0.4253 
+Iter 600 Training Loss = 0.3076, Mean average precision = 0.4712 
+Global Training Accuracy = 0.4043 
+Iter 600 Global Validation Accuracy = 0.4076 
+Iter 610 Training Loss = 0.3374, Mean average precision = 0.3675 
+Iter 620 Training Loss = 0.3397, Mean average precision = 0.3573 
+Iter 630 Training Loss = 0.3351, Mean average precision = 0.4101 
+Iter 640 Training Loss = 0.3199, Mean average precision = 0.4301 
+Iter 650 Training Loss = 0.3162, Mean average precision = 0.4243 
+Global Training Accuracy = 0.4039 
+Iter 650 Global Validation Accuracy = 0.4086 
+Iter 660 Training Loss = 0.3541, Mean average precision = 0.3282 
+Iter 670 Training Loss = 0.3340, Mean average precision = 0.3278 
+Iter 680 Training Loss = 0.3363, Mean average precision = 0.4040 
+Iter 690 Training Loss = 0.3305, Mean average precision = 0.3572 
+Iter 700 Training Loss = 0.3530, Mean average precision = 0.3298 
+Global Training Accuracy = 0.4045 
+Iter 700 Global Validation Accuracy = 0.4066 
+Iter 710 Training Loss = 0.3293, Mean average precision = 0.4109 
+Iter 720 Training Loss = 0.3530, Mean average precision = 0.3389 
+Iter 730 Training Loss = 0.3351, Mean average precision = 0.4392 
+Iter 740 Training Loss = 0.3530, Mean average precision = 0.3813 
+Iter 750 Training Loss = 0.3442, Mean average precision = 0.3334 
+Global Training Accuracy = 0.4053 
+Iter 750 Global Validation Accuracy = 0.4061 
+Iter 760 Training Loss = 0.3246, Mean average precision = 0.4278 
+Iter 770 Training Loss = 0.3293, Mean average precision = 0.4411 
+Iter 780 Training Loss = 0.3530, Mean average precision = 0.3601 
+Iter 790 Training Loss = 0.3453, Mean average precision = 0.3515 
+Iter 800 Training Loss = 0.3282, Mean average precision = 0.4618 
+Global Training Accuracy = 0.4055 
+Iter 800 Global Validation Accuracy = 0.4098 
+Iter 810 Training Loss = 0.3519, Mean average precision = 0.3457 
+Iter 820 Training Loss = 0.3475, Mean average precision = 0.3051 
+Iter 830 Training Loss = 0.3199, Mean average precision = 0.3932 
+Iter 840 Training Loss = 0.3340, Mean average precision = 0.3533 
+Iter 850 Training Loss = 0.3162, Mean average precision = 0.3849 
+Global Training Accuracy = 0.4052 
+Iter 850 Global Validation Accuracy = 0.4057 
+Iter 860 Training Loss = 0.3162, Mean average precision = 0.4457 
+Iter 870 Training Loss = 0.3126, Mean average precision = 0.4186 
+Iter 880 Training Loss = 0.3508, Mean average precision = 0.3235 
+Iter 890 Training Loss = 0.3187, Mean average precision = 0.3848 
+Iter 900 Training Loss = 0.3234, Mean average precision = 0.4089 
+Global Training Accuracy = 0.4032 
+Iter 900 Global Validation Accuracy = 0.4066 
+Iter 910 Training Loss = 0.3223, Mean average precision = 0.4313 
+Iter 920 Training Loss = 0.3282, Mean average precision = 0.3961 
+Iter 930 Training Loss = 0.3211, Mean average precision = 0.4476 
+Iter 940 Training Loss = 0.3258, Mean average precision = 0.4649 
+Iter 950 Training Loss = 0.3199, Mean average precision = 0.4084 
+Global Training Accuracy = 0.4042 
+Iter 950 Global Validation Accuracy = 0.4104 
+Iter 960 Training Loss = 0.3270, Mean average precision = 0.4885 
+Iter 970 Training Loss = 0.3397, Mean average precision = 0.4252 
+Iter 980 Training Loss = 0.3282, Mean average precision = 0.4642 
+Iter 990 Training Loss = 0.3385, Mean average precision = 0.3942 
+Iter 1000 Training Loss = 0.3541, Mean average precision = 0.3438 
+Global Training Accuracy = 0.4046 
+Iter 1000 Global Validation Accuracy = 0.4064 
+Iter 1010 Training Loss = 0.3419, Mean average precision = 0.2873 
+Iter 1020 Training Loss = 0.3475, Mean average precision = 0.3879 
+Iter 1030 Training Loss = 0.3234, Mean average precision = 0.3830 
+Iter 1040 Training Loss = 0.3475, Mean average precision = 0.3806 
+Iter 1050 Training Loss = 0.3385, Mean average precision = 0.3427 
+Global Training Accuracy = 0.4036 
+Iter 1050 Global Validation Accuracy = 0.4093 
+Iter 1060 Training Loss = 0.2987, Mean average precision = 0.4685 
+Iter 1070 Training Loss = 0.3174, Mean average precision = 0.3650 
+Iter 1080 Training Loss = 0.3211, Mean average precision = 0.4291 
+Iter 1090 Training Loss = 0.3397, Mean average precision = 0.4211 
+Iter 1100 Training Loss = 0.3397, Mean average precision = 0.3087 
+Global Training Accuracy = 0.4049 
+Iter 1100 Global Validation Accuracy = 0.4018 
+Iter 1110 Training Loss = 0.3088, Mean average precision = 0.5177 
+Iter 1120 Training Loss = 0.3305, Mean average precision = 0.4164 
+Iter 1130 Training Loss = 0.3063, Mean average precision = 0.4667 
+Iter 1140 Training Loss = 0.3328, Mean average precision = 0.3778 
+Iter 1150 Training Loss = 0.3340, Mean average precision = 0.4492 
+Global Training Accuracy = 0.4044 
+Iter 1150 Global Validation Accuracy = 0.4058 
+Iter 1160 Training Loss = 0.3431, Mean average precision = 0.3379 
+Iter 1170 Training Loss = 0.3258, Mean average precision = 0.4146 
+Iter 1180 Training Loss = 0.3162, Mean average precision = 0.4555 
+Iter 1190 Training Loss = 0.3431, Mean average precision = 0.3803 
+Iter 1200 Training Loss = 0.3363, Mean average precision = 0.3287 
+Global Training Accuracy = 0.4037 
+Iter 1200 Global Validation Accuracy = 0.4061 
+Iter 1210 Training Loss = 0.3431, Mean average precision = 0.3837 
+Iter 1220 Training Loss = 0.3385, Mean average precision = 0.3719 
+Iter 1230 Training Loss = 0.3246, Mean average precision = 0.4527 
+Iter 1240 Training Loss = 0.3305, Mean average precision = 0.4478 
+Iter 1250 Training Loss = 0.3328, Mean average precision = 0.3544 
+Global Training Accuracy = 0.4039 
+Iter 1250 Global Validation Accuracy = 0.4087 
+Iter 1260 Training Loss = 0.3328, Mean average precision = 0.4392 
+Iter 1270 Training Loss = 0.3385, Mean average precision = 0.4050 
+Iter 1280 Training Loss = 0.3442, Mean average precision = 0.2815 
+Iter 1290 Training Loss = 0.3187, Mean average precision = 0.4015 
+Iter 1300 Training Loss = 0.3199, Mean average precision = 0.4345 
+Global Training Accuracy = 0.4046 
+Iter 1300 Global Validation Accuracy = 0.4053 
+Iter 1310 Training Loss = 0.3508, Mean average precision = 0.3735 
+Iter 1320 Training Loss = 0.3385, Mean average precision = 0.3620 
+Iter 1330 Training Loss = 0.3234, Mean average precision = 0.4089 
+Iter 1340 Training Loss = 0.3351, Mean average precision = 0.4412 
+Iter 1350 Training Loss = 0.3340, Mean average precision = 0.4582 
+Global Training Accuracy = 0.4031 
+Iter 1350 Global Validation Accuracy = 0.4043 
+Iter 1360 Training Loss = 0.3113, Mean average precision = 0.4408 
+Iter 1370 Training Loss = 0.3497, Mean average precision = 0.3920 
+Iter 1380 Training Loss = 0.3328, Mean average precision = 0.4173 
+Iter 1390 Training Loss = 0.3453, Mean average precision = 0.2854 
+Iter 1400 Training Loss = 0.3328, Mean average precision = 0.4261 
+Global Training Accuracy = 0.4045 
+Iter 1400 Global Validation Accuracy = 0.4067 
+Iter 1410 Training Loss = 0.3431, Mean average precision = 0.3787 
+Iter 1420 Training Loss = 0.3138, Mean average precision = 0.4033 
+Iter 1430 Training Loss = 0.3223, Mean average precision = 0.3653 
+Iter 1440 Training Loss = 0.3150, Mean average precision = 0.4353 
+Iter 1450 Training Loss = 0.3223, Mean average precision = 0.3478 
+Global Training Accuracy = 0.4046 
+Iter 1450 Global Validation Accuracy = 0.4093 
+Iter 1460 Training Loss = 0.3282, Mean average precision = 0.4507 
+Iter 1470 Training Loss = 0.3174, Mean average precision = 0.4720 
+Iter 1480 Training Loss = 0.3150, Mean average precision = 0.4515 
+Iter 1490 Training Loss = 0.3013, Mean average precision = 0.4892 
+Iter 1500 Training Loss = 0.3246, Mean average precision = 0.4307 
+Global Training Accuracy = 0.4045 
+Iter 1500 Global Validation Accuracy = 0.4067 
+Iter 1510 Training Loss = 0.3397, Mean average precision = 0.3847 
+Iter 1520 Training Loss = 0.3305, Mean average precision = 0.4076 
+Iter 1530 Training Loss = 0.3293, Mean average precision = 0.3695 
+Iter 1540 Training Loss = 0.3397, Mean average precision = 0.3784 
+Iter 1550 Training Loss = 0.3199, Mean average precision = 0.4368 
+Global Training Accuracy = 0.4046 
+Iter 1550 Global Validation Accuracy = 0.4064 
+Iter 1560 Training Loss = 0.3258, Mean average precision = 0.3950 
+Iter 1570 Training Loss = 0.3475, Mean average precision = 0.3338 
+Iter 1580 Training Loss = 0.3305, Mean average precision = 0.3080 
+Iter 1590 Training Loss = 0.3234, Mean average precision = 0.4069 
+Iter 1600 Training Loss = 0.3270, Mean average precision = 0.3818 
+Global Training Accuracy = 0.4042 
+Iter 1600 Global Validation Accuracy = 0.4110 
+Iter 1610 Training Loss = 0.3385, Mean average precision = 0.3478 
+Iter 1620 Training Loss = 0.3464, Mean average precision = 0.3793 
+Iter 1630 Training Loss = 0.3606, Mean average precision = 0.3253 
+Iter 1640 Training Loss = 0.3351, Mean average precision = 0.4608 
+Iter 1650 Training Loss = 0.3453, Mean average precision = 0.3961 
+Global Training Accuracy = 0.4049 
+Iter 1650 Global Validation Accuracy = 0.4093 
+Iter 1660 Training Loss = 0.3340, Mean average precision = 0.3873 
+Iter 1670 Training Loss = 0.3211, Mean average precision = 0.4505 
+Iter 1680 Training Loss = 0.3199, Mean average precision = 0.4671 
+Iter 1690 Training Loss = 0.3530, Mean average precision = 0.3530 
+Iter 1700 Training Loss = 0.3408, Mean average precision = 0.3749 
+Global Training Accuracy = 0.4042 
+Iter 1700 Global Validation Accuracy = 0.4050 
+Iter 1710 Training Loss = 0.3174, Mean average precision = 0.5055 
+Iter 1720 Training Loss = 0.3497, Mean average precision = 0.3541 
+Iter 1730 Training Loss = 0.3530, Mean average precision = 0.3057 
+Iter 1740 Training Loss = 0.3088, Mean average precision = 0.4284 
+Iter 1750 Training Loss = 0.3419, Mean average precision = 0.3597 
+Global Training Accuracy = 0.4042 
+Iter 1750 Global Validation Accuracy = 0.4029 
+Iter 1760 Training Loss = 0.3340, Mean average precision = 0.3793 
+Iter 1770 Training Loss = 0.3113, Mean average precision = 0.4324 
+Iter 1780 Training Loss = 0.3138, Mean average precision = 0.4269 
+Iter 1790 Training Loss = 0.3508, Mean average precision = 0.3215 
+Iter 1800 Training Loss = 0.3126, Mean average precision = 0.3908 
+Global Training Accuracy = 0.4033 
+Iter 1800 Global Validation Accuracy = 0.4048 
+Iter 1810 Training Loss = 0.3282, Mean average precision = 0.3772 
+Iter 1820 Training Loss = 0.3199, Mean average precision = 0.4330 
+Iter 1830 Training Loss = 0.3234, Mean average precision = 0.4036 
+Iter 1840 Training Loss = 0.3234, Mean average precision = 0.4425 
+Iter 1850 Training Loss = 0.3126, Mean average precision = 0.4528 
+Global Training Accuracy = 0.4041 
+Iter 1850 Global Validation Accuracy = 0.4070 
+Iter 1860 Training Loss = 0.3138, Mean average precision = 0.4289 
+Iter 1870 Training Loss = 0.3246, Mean average precision = 0.5106 
+Iter 1880 Training Loss = 0.3199, Mean average precision = 0.4357 
+Iter 1890 Training Loss = 0.3328, Mean average precision = 0.4375 
+Iter 1900 Training Loss = 0.3351, Mean average precision = 0.3929 
+Global Training Accuracy = 0.4044 
+Iter 1900 Global Validation Accuracy = 0.4058 
+Iter 1910 Training Loss = 0.3497, Mean average precision = 0.4352 
+Iter 1920 Training Loss = 0.3328, Mean average precision = 0.3644 
+Iter 1930 Training Loss = 0.3486, Mean average precision = 0.3857 
+Iter 1940 Training Loss = 0.3374, Mean average precision = 0.3513 
+Iter 1950 Training Loss = 0.3453, Mean average precision = 0.3392 
+Global Training Accuracy = 0.4042 
+Iter 1950 Global Validation Accuracy = 0.4084 
+Iter 1960 Training Loss = 0.3101, Mean average precision = 0.4250 
+Iter 1970 Training Loss = 0.3187, Mean average precision = 0.4323 
+Iter 1980 Training Loss = 0.3211, Mean average precision = 0.3695 
+Iter 1990 Training Loss = 0.3340, Mean average precision = 0.3851 
