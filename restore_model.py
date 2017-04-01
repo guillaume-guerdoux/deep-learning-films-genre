@@ -56,28 +56,32 @@ def main():
         # Load pretrained model
         # Skip weights from fc8 (fine-tuning)
         # load_with_skip('pretrained_alexnet.npy', sess, ['fc8'])
-        saver.restore(sess, "saved_models/MSE_without_data_augmentation_0.75_0.001/film_genre_model.ckpt")
+        # saver.restore(sess, "saved_models/MSE_without_data_augmentation_0.75_0.001/film_genre_model.ckpt")
+        saver.restore(sess, "saved_models/models/model_dropout05_mean_square_error.ckpt")
         print('Model Restored')
 
-        '''test_map_global = 0.
+        test_map_global = 0.
         test_count = 0
         # test accuracy by group of batch_size images
         for _ in range(int(len(dataset_manager.test_list) / batch_size) +
                        1):
             batch_tx, batch_ty = dataset_manager.next_batch(
                 batch_size, 'test')
+            # print(batch_tx[0], batch_ty[0])
             test_output = sess.run(pred,
                                    feed_dict={x: batch_tx,
                                               keep_var: 1})
+            # print(test_output[0])
             MAP = mean_average_precision(test_output, batch_ty)
             test_map_global += MAP
             test_count += 1
         test_map_global /= test_count
         print("Global Test Accuracy = {:.4f}".format(
-            test_map_global))'''
+            test_map_global))
         # Load one image
         img = cv2.imread(
-            'saved_models/images_tests/naruto.jpg')
+            'saved_models/images_tests/yellow.jpg')
+
         img = cv2.resize(img, (227, 227))
         img = img.astype(np.float32)
         img -= np.array([104., 117., 124.])

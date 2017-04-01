@@ -13,8 +13,12 @@ def mean_average_precision(outputs, labels):
         Label shape : [nb_output, 26] '''
     average_precisions = []
     for index, output in enumerate(outputs):
+        print(output)
+
         label = labels[index]
+        print(label)
         average_precision = average_precision_score(label, output)
+        print(average_precision)
         average_precisions.append(average_precision)
     return(sum(average_precisions)/len(average_precisions))
 
